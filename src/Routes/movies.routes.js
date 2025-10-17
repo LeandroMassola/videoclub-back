@@ -4,8 +4,7 @@ const {getMovieReleases, getMovieDetail, getMovieTrailer} = require("../Controll
 
 const router = Router();
 
-router.get("/", getMovieReleases)
+/* router.get("/", getMovieReleases) */
 router.get("/:id/", getMovieDetail)
-router.get("/:id/trailer", getMovieTrailer)
 
 module.exports = router
