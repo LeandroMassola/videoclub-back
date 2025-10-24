@@ -102,4 +102,9 @@ const getMovieDetail = async (req, res) => {
 
 
 
+
+
+
+
+
     module.exports = {getMovieReleases, getMovieDetail}

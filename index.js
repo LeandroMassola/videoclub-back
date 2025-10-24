@@ -6,6 +6,9 @@ const app = express();
 
 const dotenv = require("dotenv") ;
 dotenv.config();
+app.use(express.json())
+
+app.use(cors())
 
 const mongoose = require('mongoose')
 
@@ -14,11 +17,11 @@ mongoose.connect(process.env.MONGO_URI)
     .catch((err)=> console.log("error db connect: " + err));
 
 const moviesRoutes = require("./src/Routes/movies.routes")
-app.use(express.json())
+const usersRoutes = require("./src/Routes/users.routes")
 
-app.use(cors())
 
 app.use("/api/movies", moviesRoutes)
+app.use("/user", usersRoutes)
 
 
 app.listen(8000, ()=>{
