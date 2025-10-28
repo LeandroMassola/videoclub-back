@@ -1,5 +1,6 @@
 const User = require("../Models/users.model");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken")
 const SECRET = process.env.JWT_SECRET;
 
@@ -26,10 +27,17 @@ const getUserById = async (req, res) => {
 }
 
 const postDataRegister = async (req, res) => {
-    const {name, surname, mail, password} = req.body;
-    console.log("Datos recibidos en el backend:", req.body);
+    
     try {
-        console.log(req.body)
+        const {name, surname, mail, password} = req.body;
+        const errors = validationResult(req)
+
+        if(!errors.isEmpty()) {
+            return res.status(400).json({errors:errors.mapped()})
+        } 
+        console.log("Datos recibidos en el backend:", req.body);
+
+
         const hashedPass = await bcrypt.hash(password, 10)
         const newUser = await User.create({name, surname, mail, password:hashedPass});
         await newUser.save()
